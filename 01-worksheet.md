@@ -61,42 +61,101 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 > *"Tôi là AI Engineer tại Vin Smart Future (Vingroup). Tôi đang tìm kiếm các pain point vận hành cụ thể có thể tối ưu bằng AI cho mảng [Chọn một: VinFast / Xanh SM / Vinhomes / Vinmec]. Hãy gợi ý cho tôi 5 quy trình nghiệp vụ thủ công, tốn nhiều thời gian và gây rò rỉ hiệu suất kèm con số thống kê ước tính về tổn thất."*
 
 ### 📝 List bài toán của tôi:
-| # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
-|---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-
----
+| # | Subsidiary | Lens | Mô tả ngắn bài toán |
+|---|------------|------|---------------------|
+| 1 | **Vinmec** | Tốn thời gian | Bác sĩ mất quá nhiều thời gian viết tóm tắt hồ sơ xuất viện (20-30 phút/bệnh nhân), gây quá tải. |
+| 2 | **Vinhomes** | Lặp lại | Ban quản lý tốn thời gian đọc, phân loại thủ công và điều hướng hàng trăm phản ánh của cư dân mỗi ngày trên App. |
+| 3 | **VinFast** | AI-upgrade | Khách hàng mô tả lỗi xe bằng tiếng Việt qua tổng đài, kỹ thuật viên tốn thời gian nghe và mapping sang mã lỗi chuyên ngành. |
+| 4 | **Vinpearl** | Pain từ người khác | Quản lý khách sạn không phản hồi kịp các phàn nàn khẩn cấp trên Booking/Agoda, dẫn đến khách đánh giá 1 sao. |
+| 5 | **Xanh SM** | Tốn thời gian | Điều vận phải nghe lại các cuộc gọi khách hàng hủy chuyến để ghi chú lý do rò rỉ cuốc xe hằng tuần. |
 
 # 🃏 Phase 2 — QUICK-ASSESS (Cá nhân, 30 min)
 
-Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** dưới đây (10 phút/card).
-
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #___                                     │
+│ QUICK PROBLEM CARD #1                                       │
 │                                                             │
-│ Bài toán (1 câu): ________________________________________  │
+│ Bài toán (1 câu): Bác sĩ mất quá nhiều thời gian đọc và tổng│
+│ hợp bệnh án để viết Giấy tóm tắt xuất viện cho bệnh nhân.   │
 │ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
-│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                     [x] Vinmec   [ ] Khác (Ghi rõ)________  │
 │                                                             │
-│ Ai đang đau (Actor)? ______________________________________ │
+│ Ai đang đau (Actor)? Bác sĩ điều trị (quá tải), Bệnh nhân   │
+│ (phải chờ đợi lâu để được xuất viện).                       │
 │                                                             │
-│ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. ___ ──> 2. ___ ──> 3. ___ ──> 4. ___                   │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Mở xem HSBA điện tử & KQ xét nghiệm ──> 2. Trích xuất  │
+│   các chỉ số quan trọng ──> 3. Viết tóm tắt y khoa ──>      │
+│   4. Viết lại bằng ngôn ngữ phổ thông cho bệnh nhân hiểu.   │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? ___ (⏱ ___ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _____________________ │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 2 & 3 (⏱ 25 phút/lượt)│
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2 & 3 & 4 (AI tự │
+│ động đọc data, tổng hợp và draft sẵn văn bản 2 phiên bản).  │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? ______________________ │
-│   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   "Giảm thời gian soạn tóm tắt xuất viện từ 30 min ──>      │
+│   dưới 5 min/bệnh nhân. Tỷ lệ chính xác y khoa 100% (sau    │
+│   khi bác sĩ review)."                                      │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #2                                       │
+│                                                             │
+│ Bài toán (1 câu): Phân loại và điều hướng tự động khiếu nại │
+│ của cư dân trên App Vinhomes Resident đến đúng phòng ban.   │
+│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [x] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Nhân viên CSKH tòa nhà, Cư dân.        │
+│                                                             │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Nhận ticket ──> 2. Đọc & hiểu nội dung ──> 3. Gắn tag  │
+│   phân loại (Điện, Nước, An ninh) ──> 4. Assign cho bộ phận │
+│   xử lý tương ứng.                                          │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 2 & 3 (⏱ 3 phút/ticket)│
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2 & 3 (Đọc và gắn│
+│ tag tự động).                                               │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   "Giảm thời gian phân loại ticket từ 3 min ──> dưới 10s.   │
+│   Độ chính xác phân loại > 90%."                            │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                                       │
+│                                                             │
+│ Bài toán (1 câu): Mapping mô tả lỗi xe bằng tiếng Việt của  │
+│ khách hàng sang mã chẩn đoán lỗi chuyên ngành (DTC).        │
+│ Công ty thành viên: [x] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Kỹ thuật viên / Cố vấn dịch vụ xưởng.  │
+│                                                             │
+│ Workflow thủ công hiện tại (3 bước):                        │
+│   1. Khách mô tả lỗi (VD: "kêu cọc cọc ở bánh") ──>         │
+│   2. KTV tra cứu tài liệu ──> 3. Lên phương án kiểm tra.    │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 2 (⏱ 15 phút/lượt)    │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2 (AI phân tích  │
+│ ngữ nghĩa tiếng Việt và gợi ý mã lỗi kỹ thuật có thể xảy ra)│
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   "Giảm thời gian chẩn đoán ban đầu từ 15 min ──> 2 min."   │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
 
 > [!TIP]
 > **🤖 AI Prompts — Stress-Test thẻ bài toán:**
@@ -170,4 +229,4 @@ Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Pr
 ---
 
 # 📝 Phase 6 — REFLECTION (Cá nhân)
-*Ghi nhận phản ánh của cá nhân bạn về việc phối hợp với AI trong buổi học hôm nay vào file `03-ai-log.md`.*
+*Ghi nhận phản ánh của cá nhân bạn về việc phối hợp với AI trong buổi học hôm nay vào file `03-ai-log.md`.* (em đã ghi trong file)
