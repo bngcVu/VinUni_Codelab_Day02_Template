@@ -74,28 +74,53 @@ Then a single JSON object (no markdown code fences):
 
 def evaluate_prompt(user_input: str) -> str:
     """
-    Calls the Gemini 2.5 API with your SYSTEM_PROMPT and the user_input,
+    Calls the Gemini API with your SYSTEM_PROMPT and the user_input,
     returning the raw response text.
-
-    Hint:
-        Set GEMINI_API_KEY or GOOGLE_API_KEY in your environment.
-        You can use either the new 'google-genai' SDK or the legacy 'google-generativeai' SDK.
     """
     from google import genai
     from google.genai import types
 
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY is not set")
     client = genai.Client(api_key=api_key)
 
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=user_input,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            temperature=0.0,  # Giảm tính ngẫu nhiên để ranh giới ổn định hơn
-        ),
-    )
-    return response.text or ""
+    # Danh sách các model dự phòng nếu model chính bị lỗi hoặc 404
+    candidate_models = [
+        GEMINI_MODEL,
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-2.5-flash",
+    ]
+    # Loại trùng lặp nhưng giữ thứ tự
+    seen = set()
+    candidate_models = [m for m in candidate_models if not (m in seen or seen.add(m))]
+
+    last_error = None
+    for model_name in candidate_models:
+        try:
+            print(f"   ⏳ Đang gọi model '{model_name}' (chờ vài giây)...", flush=True)
+            response = client.models.generate_content(
+                model=model_name,
+                contents=user_input,
+                config=types.GenerateContentConfig(
+                    system_instruction=SYSTEM_PROMPT,
+                    temperature=0.0,
+                ),
+            )
+            print(f"   ✅ Nhận phản hồi thành công từ '{model_name}'\n", flush=True)
+            return response.text or ""
+        except Exception as e:
+            last_error = e
+            err_msg = str(e)
+            if "404" in err_msg or "not found" in err_msg.lower():
+                print(f"   ⚠️ Model '{model_name}' báo 404, thử model tiếp theo...", flush=True)
+                continue
+            else:
+                # Lỗi khác (quota, auth, v.v.) thì raise luôn
+                raise
+
+    raise RuntimeError(f"Không model nào khả dụng. Lỗi cuối: {last_error}")
 
 
 # ===========================================================================
