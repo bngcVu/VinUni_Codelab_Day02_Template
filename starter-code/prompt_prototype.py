@@ -15,7 +15,10 @@ import sys
 from typing import Any
 
 # Standard Model Identifier
-GEMINI_MODEL = "gemini-2.5-flash"
+# Note: "gemini-2.5-flash" now returns 404 NOT_FOUND for new API users,
+# so we default to the model recommended by the API error message.
+# Can be overridden via the GEMINI_MODEL environment variable.
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 
 # ===========================================================================
 # 🛡️ Operational Boundaries to Enforce via System Prompt:
@@ -125,7 +128,7 @@ if __name__ == "__main__":
         
     print("\033[94m==================================================")
     print("🚀 Vin Smart Future — Programmatic Boundary Stress-Testing")
-    print("Standard Model: Google Gemini 2.5 Flash")
+    print(f"Standard Model: {GEMINI_MODEL}")
     print("==================================================\033[0m\n")
     
     for i, test in enumerate(ADVERSARIAL_TESTS, start=1):
