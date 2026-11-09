@@ -29,12 +29,14 @@
 
 **Bảng chấm chọn bài** *(nhóm điền khi họp)*:
 
+### 2. Bảng chấm chọn bài (nhóm điền khi họp)
+
 | Bài của | G1 (/20) | G2 (/20) | G3 (/10) | G4 (/10) | Tổng (/60) | Ghi chú |
-|---|:-:|:-:|:-:|:-:|:-:|---|
-| Bùi Ngọc Vũ | | | | | | |
-| Nguyễn Thế Trường | | | | | | |
-| Dương Tuấn Hưng | | | | | | |
-| Tô Minh Thành | | | | | | |
+|---|:---:|:---:|:---:|:---:|:---:|---|
+| **Bùi Ngọc Vũ** | 19 | 19 | 9 | 10 | **57** | **Được chọn làm bài chính cho main**: Sơ đồ workflow rõ ràng (150' -> 40'), phỏng vấn thực tế với Kế toán trưởng, Problem Statement đủ 6 field, AI Fit chọn Workflow + HITL chặt chẽ. |
+| **Nguyễn Thế Trường** | 17 | 16 | 8 | 8 | **49** | Ý tưởng NOXH có nỗi đau lớn nhưng thiếu tính lặp lại định kỳ, ranh giới an toàn chưa cụ thể. |
+| **Dương Tuấn Hưng** | 16 | 15 | 8 | 7 | **46** | Bài toán bán trú mang tính thời sự nhưng baseline thời gian nghẽn chưa đo lường chính xác bằng người thật. |
+| **Tô Minh Thành** | 15 | 16 | 7 | 8 | **46** | Phân tích bài toán còn mang tính lý thuyết, thiếu chi tiết về phương án quay về (fallback). |
 
 ---
 
